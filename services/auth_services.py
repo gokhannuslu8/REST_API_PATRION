@@ -1,8 +1,10 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from pymongo import MongoClient
 
-client = MongoClient('mongodb://localhost:27017/')
-db = client['RestApiPatrion']
+from config import ConfigMongo
+
+client = MongoClient(ConfigMongo.MONGO_URI)
+db = client[ConfigMongo.MONGO_DBNAME]
 
 
 class User:
