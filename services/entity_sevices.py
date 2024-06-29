@@ -46,3 +46,26 @@ class Entity:
         }
 
         return _entity, pagination
+
+
+def entity_delete(entity_id):
+    result = db.entity.delete_one({'_id': ObjectId(entity_id)})
+    if result.deleted_count == 1:
+        return True
+    return False
+
+def entity_update(entity_id, data):
+    entity = db.entity.find_one({'_id': ObjectId(entity_id)})
+    if not entity:
+        return False
+
+    update_fields = {}
+    if 'factory' in data:
+        update_fields['factory'] = data['factory']
+    if 'name' in data:
+        update_fields['name'] = data['name']
+
+    if update_fields:
+        db.entity.update_one({'_id': ObjectId(entity_id)}, {'$set': update_fields})
+        return True
+    return False
