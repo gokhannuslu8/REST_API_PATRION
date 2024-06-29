@@ -1,11 +1,9 @@
 from flask import Blueprint, request, jsonify
-from pymongo import MongoClient
 from flask_jwt_extended import jwt_required
-
-client = MongoClient('mongodb://localhost:27017/')
-db = client['mydatabase']
+from services.entity_sevices import Entity
 
 entity_bp = Blueprint('entity', __name__)
+
 
 @entity_bp.route('/entities', methods=['POST'])
 @jwt_required()
@@ -14,19 +12,20 @@ def create_entity():
     name = data['name']
     factory = data['factory']
 
-    db.entities.insert_one({
-        'name': name,
-        'factory': factory
-    })
+    # if Entity.find_entity_name(name, factory):
+    #     return jsonify({'message': 'Factory Name already exists'}), 400
+
+    entity = Entity(name, factory)
+    entity.entity_save()
 
     return jsonify({'message': 'Entity created successfully'}), 201
 
+
 @entity_bp.route('/entities', methods=['GET'])
 @jwt_required()
-def get_entities():
-    page = request.args.get('page', 1)
-    per_page = request.args.get('perPage', 10)
-    entities = db.entities.find()
-    from utils.pagination import paginate
-    result = paginate(entities, page, per_page)
-    return jsonify(result), 200
+def get_entity():
+    page = request.args.get("page", type=int, default=1)
+    per_page = request.args.get("per_page", type=int, default=10)
+    print(page,per_page)
+    factories, pagination = Entity.entity_get(page, per_page)
+    return jsonify(factories, pagination), 200
