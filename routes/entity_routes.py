@@ -29,3 +29,30 @@ def get_entity():
     print(page,per_page)
     factories, pagination = Entity.entity_get(page, per_page)
     return jsonify(factories, pagination), 200
+
+
+@entity_bp.route('/entities/<entity_id>', methods=['DELETE'])
+@jwt_required()
+def delete_entity(entity_id):
+    entity = Entity.entity_get_by_id(entity_id)
+    print(entity)
+    if not entity:
+        return jsonify({'message': 'Entity not found'}), 404
+
+    Entity.entity_delete(entity["_id"])
+    return jsonify({'message': 'Entity deleted successfully'}), 200
+
+
+@entity_bp.route('/entities/<entity_id>', methods=['PUT'])
+@jwt_required()
+def update_entity(entity_id):
+    data = request.get_json()
+    name = data.get('name')
+    factory = data.get('factory')
+
+    entity = Entity.entity_get_by_id(entity_id)
+    if not entity:
+        return jsonify({'message': 'Entity not found'}), 404
+
+    Entity.entity_update(entity_id, name, factory)
+    return jsonify({'message': 'Entity updated successfully'}), 200
