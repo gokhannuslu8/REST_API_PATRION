@@ -22,7 +22,7 @@ Geliştirme ortamınızı çalıştırmak için adım adım örnekler:
     ```bash
     git clone <repository-url>
     cd <repository-directory>
-    ```
+    ```s
 
 2. **Sanal ortam oluşturun (isteğe bağlı ancak önerilir):**
     ```bash
