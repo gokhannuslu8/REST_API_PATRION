@@ -13,7 +13,7 @@ def create_entity():
     factory = data['factory']
 
     # if Entity.find_entity_name(name, factory):
-    #     return jsonify({'message': 'Factory Name already exists'}), 400
+    # return jsonify({'message': 'Factory Name already exists'}), 400
 
     entity = Entity(name, factory)
     entity.entity_save()

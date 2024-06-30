@@ -34,11 +34,12 @@ def get_factories():
 @factory_bp.route('/factories/<factory_id>', methods=['DELETE'])
 @jwt_required()
 def delete_factory(factory_id):
-    factory = Factory.find_factory_id(factory_id)
+    factory = Factory.factory_get_by_id(factory_id)
+    print(factory)
     if not factory:
         return jsonify({'message': 'Factory not found'}), 404
 
-    factory.factory_delete()
+    Factory.factory_delete(factory["_id"])
     return jsonify({'message': 'Factory deleted successfully'}), 200
 
 
@@ -46,20 +47,13 @@ def delete_factory(factory_id):
 @jwt_required()
 def update_factory(factory_id):
     data = request.get_json()
-    factory = Factory.find_factory_id(factory_id)
+    name = data['name']
+    location = data['location']
+    capacity = data['capacity']
+
+    factory = Factory.factory_get_by_id(factory_id)
     if not factory:
         return jsonify({'message': 'Factory not found'}), 404
 
-    name = data.get('name', factory.name)
-    location = data.get('location', factory.location)
-    capacity = data.get('capacity', factory.capacity)
-
-    if name != factory.name and Factory.find_factory_name(name):
-        return jsonify({'message': 'Factory Name already exists'}), 400
-
-    factory.name = name
-    factory.location = location
-    factory.capacity = capacity
-    factory.factory_save()
-
+    Factory.factory_update(factory_id, name, location, capacity)
     return jsonify({'message': 'Factory updated successfully'}), 200

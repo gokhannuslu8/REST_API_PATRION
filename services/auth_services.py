@@ -1,3 +1,4 @@
+from bson import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 from pymongo import MongoClient
 
@@ -20,8 +21,8 @@ class User:
         })
 
     @staticmethod
-    def find_by_username(username):
-        return db.users.find_one({'username': username})
+    def find_by_username(users_id):
+        return db.users.find_one({'_id': ObjectId(users_id)})
 
     @staticmethod
     def check_password(hash, password):
@@ -37,3 +38,26 @@ class User:
                 'factory_name': user['factory_name']
             })
         return users
+
+    @staticmethod
+    def users_get_by_id(users_id):
+        return db.users.find_one({'_id': ObjectId(users_id)})
+
+    @staticmethod
+    def users_delete(users_id):
+        print(users_id)
+        db.users.delete_one({'_id': users_id})
+
+    @staticmethod
+    def user_update(user_id, username, password, factory):
+        update_data = {}
+        if username:
+            update_data['name'] = username
+        if factory:
+            update_data['factory_name'] = factory
+        if password:
+            update_data['password'] = password
+        db.user.update_one(
+            {'_id': ObjectId(user_id)},
+            {'$set': update_data}
+        )

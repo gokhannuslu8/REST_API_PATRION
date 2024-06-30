@@ -51,3 +51,29 @@ class Factory:
         }
 
         return factories, pagination
+
+    @staticmethod
+    def factory_get_by_id(factory_id):
+        from bson import ObjectId
+        return db.factory.find_one({'_id': ObjectId(factory_id)})
+
+    @staticmethod
+    def factory_delete(factory_id):
+        print(factory_id)
+        db.factory.delete_one({'_id': factory_id})
+
+    @staticmethod
+    def factory_update(factory_id, name, location, capacity):
+        update_data = {}
+        if name:
+            update_data['name'] = name
+        if location:
+            update_data['location'] = location
+        if capacity:
+            update_data['capacity'] = capacity
+
+        from bson import ObjectId
+        db.factory.update_one(
+            {'_id': ObjectId(factory_id)},
+            {'$set': update_data}
+        )
