@@ -84,34 +84,3 @@ Describe your API endpoints here with examples and expected responses.
     "capacity": 100
   }
 
-
-###  Running Tests
-
-Explain how to run the automated tests for this system.
-
-Install test dependencies:
-
-pip install pytest pytest-flask
-
-
-### Run the tests:
-
-pytest
-
-### Contributing
-
-#### 1- Fork the repository.
-
-#### 2- Create a new branch:
-
-git checkout -b feature/new-feature
-
-#### 3- Make your changes and commit them:
-
-git add .
-
-git commit -m "Added new feature"
-
-#### 4- Push your changes:,
-
-git push origin feature/new-feature
