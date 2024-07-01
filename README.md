@@ -84,3 +84,4 @@ Describe your API endpoints here with examples and expected responses.
     "capacity": 100
   }
 
+![img.png](img.png) 
