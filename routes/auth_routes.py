@@ -1,3 +1,5 @@
+import traceback
+
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required
 from services.auth_services import User
@@ -81,14 +83,13 @@ def update_user(user_id):
     factory = data.get('factory_name')
 
     try:
-        user = User.users_get_by_id(user_id)
+        user = User.find_by_id(user_id)
         if not user:
             return jsonify({'message': 'User not found'}), 404
 
-        User.user_update(user_id, username, password, factory)
+        User.update(user_id, username, password, factory)
         return jsonify({'message': 'User updated successfully'}), 200
     except Exception as e:
-        import traceback
         return jsonify({
             'message': 'Internal Server Error',
             'error': str(e),

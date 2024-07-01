@@ -13,6 +13,7 @@ class User:
         self.username = username
         self.password_hash = generate_password_hash(password)
         self.factory = factory
+
     def save(self):
         db.users.insert_one({
             'username': self.username,
@@ -21,13 +22,16 @@ class User:
         })
 
     @staticmethod
-    def find_by_username(users_id):
+    def find_by_username(username):
+        return db.users.find_one({'username': username})
+
+    @staticmethod
+    def find_by_id(users_id):
         return db.users.find_one({'_id': ObjectId(users_id)})
 
     @staticmethod
     def check_password(hash, password):
         return check_password_hash(hash, password)
-
 
     @staticmethod
     def get_all_users():
@@ -49,15 +53,15 @@ class User:
         db.users.delete_one({'_id': users_id})
 
     @staticmethod
-    def user_update(user_id, username, password, factory):
+    def update(user_id, username, password, factory):
         update_data = {}
         if username:
-            update_data['name'] = username
+            update_data['username'] = username
+        if password:
+            update_data['password_hash'] = generate_password_hash(password)
         if factory:
             update_data['factory_name'] = factory
-        if password:
-            update_data['password'] = password
-        db.user.update_one(
+        db.users.update_one(
             {'_id': ObjectId(user_id)},
             {'$set': update_data}
         )
