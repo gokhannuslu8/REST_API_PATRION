@@ -1,121 +1,121 @@
-# Proje Adı
+# Project Name
 
-REST API.
+PATRION REST API
 
-## Başlarken
+## Getting Started
 
-Bu talimatlar, projenizi geliştirme ve test etme amaçlarıyla yerel makinenizde çalıştırmanıza yardımcı olacaktır.
+These instructions will help you run the project on your local machine for development and testing purposes.
 
-### Gereksinimler
+### Requirements
 
-Yazılımı yüklemek için gereken şeyler ve bunları nasıl yükleyeceğiniz:
+What you need to install the software and how to install them:
 
-- Python (3.x sürümü)
+- Python (version 3.x)
 - MongoDB
-- Sanal Ortam (isteğe bağlı ancak önerilir)
+- Virtual Environment (optional but recommended)
 
-### Kurulum
+### Installation
 
-Geliştirme ortamınızı çalıştırmak için adım adım örnekler:
+Step-by-step examples to set up your development environment:
 
-1. **Depoyu klonlayın:**
+1. **Clone the repository:**
     ```bash
     git clone <repository-url>
     cd <repository-directory>
     ```
 
-2. **Sanal ortam oluşturun (isteğe bağlı ancak önerilir):**
+2. **Create a virtual environment (optional but recommended):**
     ```bash
     python -m venv venv
     ```
 
-3. **Sanal ortamı etkinleştirin:**
-    - **Windows için:**
+3. **Activate the virtual environment:**
+    - **For Windows:**
       ```bash
       venv\Scripts\activate
       ```
-    - **Mac/Linux için:**
+    - **For Mac/Linux:**
       ```bash
       source venv/bin/activate
       ```
 
-4. **Bağımlılıkları yükleyin:**
+4. **Install dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
 
-5. **MongoDB'yi kurun ve başlatın:**
-    - Eğer yüklü değilse MongoDB'yi yükleyin.
-    - MongoDB servisini başlatın.
+5. **Install and start MongoDB:**
+    - If MongoDB is not installed, install it.
+    - Start the MongoDB service.
 
-6. **Çevresel değişkenleri yapılandırın:**
-    Kök dizininde bir `.env` dosyası oluşturun ve aşağıdaki değişkenleri ekleyin:
+6. **Configure environment variables:**
+    Create a `.env` file in the root directory and add the following variables:
     ```env
-    MONGO_URI=<mongodb-uri'niz>
+    MONGO_URI=<your-mongodb-uri>
     MONGO_DBNAME=mydatabase
-    JWT_SECRET_KEY=<jwt-gizli-anahtarınız>
+    JWT_SECRET_KEY=<your-jwt-secret-key>
     ```
 
-### Uygulamayı Çalıştırma
+### Running the Application
 
-1. **Flask uygulamasını başlatın:**
+1. **Start the Flask application:**
     ```bash
     flask run
     ```
 
-2. **API'ye erişin:**
-    - API varsayılan olarak `http://localhost:5000` adresinde erişilebilir.
-    - API endpoint'leriyle etkileşim için `curl`, `Postman` veya bir web tarayıcısı kullanabilirsiniz.
+2. **Access the API:**
+    - The API is accessible by default at `http://localhost:5000`.
+    - You can interact with the API endpoints using `curl`, `Postman`, or a web browser.
 
-## Kullanım
+## Usage
 
-Projenizi nasıl kullanacağınızı açıklayın. Gerekirse örnekler ekleyin.
+Explain how to use your project. Include examples where necessary.
 
-## API Endpoint'leri
+## API Endpoints
 
-API endpoint'lerinizi burada örnekler ve beklenen yanıtlarla açıklayın.
+Describe your API endpoints here with examples and expected responses.
 
-### Fabrika Oluşturma
+### Create Factory
 
 - **URL:** `/factories`
-- **Metod:** `POST`
-- **Başlık:** `Authorization: Bearer <jwt-token>`
-- **Gövde:**
+- **Method:** `POST`
+- **Headers:** `Authorization: Bearer <jwt-token>`
+- **Body:**
   ```json
   {
-    "name": "Fabrika Adı",
-    "location": "Fabrika Konumu",
+    "name": "Factory Name",
+    "location": "Factory Location",
     "capacity": 100
   }
 
- ### Testlerin Çalıştırılması
-Sistem için otomatik testleri nasıl çalıştıracağınızı açıklayın.
 
-###  Test bağımlılıklarını yükleyin:
+###  Running Tests
+
+Explain how to run the automated tests for this system.
+
+Install test dependencies:
 
 pip install pytest pytest-flask
 
-###  Testleri çalıştırın:
+
+### Run the tests:
 
 pytest
 
- ### KATKIDA BULUNMA
+### Contributing
 
-1- Depoyu çatallayın (fork).
+#### 1- Fork the repository.
 
-2- Yeni bir dal oluşturun:
+#### 2- Create a new branch:
 
-git checkout -b feature/yeni-özellik
+git checkout -b feature/new-feature
 
-3- Değişikliklerinizi yapın ve bunları kaydedin
+#### 3- Make your changes and commit them:
 
 git add .
 
-git commit -m "Yeni özellik eklendi"
+git commit -m "Added new feature"
 
+#### 4- Push your changes:,
 
-### Değişikliklerinizi gönderin
-
-git push origin feature/yeni-özellik
-
-
+git push origin feature/new-feature
