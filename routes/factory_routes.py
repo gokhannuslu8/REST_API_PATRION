@@ -1,11 +1,7 @@
 from flask import Blueprint, request, jsonify
-from pymongo import MongoClient
 from flask_jwt_extended import jwt_required
 from services.factory_services import Factory
-from utils.pagination import paginate
 
-client = MongoClient('mongodb://localhost:27017/')
-db = client['mydatabase']
 
 factory_bp = Blueprint('factory', __name__)
 
@@ -16,16 +12,48 @@ def create_factory():
     name = data['name']
     location = data['location']
     capacity = data['capacity']
+
+    if Factory.find_factory_name(name):
+        return jsonify({'message': 'Factory Name already exists'}), 400
+
     factory = Factory(name, location, capacity)
     factory.factory_save()
 
     return jsonify({'message': 'Factory created successfully'}), 201
 
+
 @factory_bp.route('/factories', methods=['GET'])
 @jwt_required()
 def get_factories():
-    page = request.args.get('page', 1)
-    per_page = request.args.get('perPage', 10)
-    factories = db.factories.find()
-    result = paginate(factories, page, per_page)
-    return jsonify(result), 200
+    page = request.args.get("page", type=int, default=1)
+    per_page = request.args.get("per_page", type=int, default=10)
+    factories, pagination = Factory.factory_get(page, per_page)
+    return jsonify(factories, pagination), 200
+
+
+@factory_bp.route('/factories/<factory_id>', methods=['DELETE'])
+@jwt_required()
+def delete_factory(factory_id):
+    factory = Factory.factory_get_by_id(factory_id)
+    print(factory)
+    if not factory:
+        return jsonify({'message': 'Factory not found'}), 404
+
+    Factory.factory_delete(factory["_id"])
+    return jsonify({'message': 'Factory deleted successfully'}), 200
+
+
+@factory_bp.route('/factories/<factory_id>', methods=['PUT'])
+@jwt_required()
+def update_factory(factory_id):
+    data = request.get_json()
+    name = data['name']
+    location = data['location']
+    capacity = data['capacity']
+
+    factory = Factory.factory_get_by_id(factory_id)
+    if not factory:
+        return jsonify({'message': 'Factory not found'}), 404
+
+    Factory.factory_update(factory_id, name, location, capacity)
+    return jsonify({'message': 'Factory updated successfully'}), 200
