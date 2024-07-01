@@ -2,10 +2,6 @@
 
 PATRION REST API
 
-## Getting Started
-
-These instructions will help you run the project on your local machine for development and testing purposes.
-
 ### Requirements
 
 What you need to install the software and how to install them:
