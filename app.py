@@ -21,6 +21,13 @@ app.register_blueprint(entity_bp)
 
 class CustomJSONEncoder(json.JSONEncoder):
     def default(self, obj):
+        """
+          Provides a default serialization method for objects that are not serializable by default.
+
+          This method is used to convert objects into a JSON-serializable format when
+          using custom serialization. It is typically overridden in a custom JSON encoder
+          class to handle objects that do not have a standard JSON representation.
+          """
         try:
             return super().default(obj)
         except TypeError:
