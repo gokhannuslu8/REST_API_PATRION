@@ -31,11 +31,9 @@ class Factory:
         factories = []
         total_count = db.factory.count_documents({})
 
-        # Calculate pagination parameters
         skip = (page - 1) * per_page
         limit = per_page
 
-        # Fetch factories for the specified page
         for factory in db.factory.find({}, {'_id': 0}).skip(skip).limit(limit):
             factories.append({
                 'name': factory['name'],

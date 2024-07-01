@@ -2,3 +2,5 @@ Flask==2.0.1
 pymongo
 Flask-JWT-Extended
 Werkzeug==2.0.1
+Pytest
+requests

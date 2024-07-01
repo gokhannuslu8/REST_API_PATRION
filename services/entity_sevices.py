@@ -27,11 +27,9 @@ class Entity:
         _entity = []
         total_count = db.entity.count_documents({})
 
-        # Calculate pagination parameters
         skip = (page - 1) * per_page
         limit = per_page
 
-        # Fetch factories for the specified page
         for entity in db.entity.find({}, {'_id': 0}).skip(skip).limit(limit):
             _entity.append({
                 'factory': entity['factory'],
